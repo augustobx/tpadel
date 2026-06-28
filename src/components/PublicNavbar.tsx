@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { CalendarSearch, Trophy, User } from 'lucide-react';
 
 export default function PublicNavbar({ sysSettings }: { sysSettings?: any }) {
-  const topbarTitle = sysSettings?.topbarName || "PSP Padel";
+  const topbarTitle = sysSettings?.topbarName || "T-Padel";
 
   return (
     <nav className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 md:rounded-t-[2.5rem] relative z-20">

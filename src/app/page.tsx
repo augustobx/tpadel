@@ -2,6 +2,7 @@ import { getPublicCourts } from "@/actions/public-bookings";
 import { getSettings } from "@/actions/settings";
 import { getPublicTournaments } from "@/actions/public-tournaments";
 import BookingFlow from "@/components/BookingFlow";
+import BookingFlowChat from "@/components/BookingFlowChat";
 import PublicNavbar from "@/components/PublicNavbar";
 import Link from "next/link";
 import { Trophy } from "lucide-react";
@@ -19,6 +20,7 @@ export default async function HomePage() {
 
     const settings = await getSettings();
     const theme = settings?.theme || 'light';
+    const appLayout = settings?.appLayout || 'classic';
 
     const isReservationsEnabled = settings?.reservationsEnabled ?? true;
     const isWhatsappReservations = settings?.whatsappReservations ?? true;
@@ -29,7 +31,7 @@ export default async function HomePage() {
     if (usersModuleEnabled) {
         const cookieStore = await cookies();
         const hasSession = !!session;
-        const hasSkipped = cookieStore.get("psp_skip_registration");
+        const hasSkipped = cookieStore.get("tpadel_skip_registration");
 
         if (!hasSession && !hasSkipped) {
             return <UserWelcomeSplash />;
@@ -66,10 +68,20 @@ export default async function HomePage() {
     }
 
     return (
-        <div className={`${theme} min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col md:items-center md:py-8`}>
+        <div 
+            className={`${theme} min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col md:items-center md:py-8`}
+            style={{ 
+                '--color-primary': settings?.primaryColor || '#10b981', 
+                '--color-secondary': settings?.secondaryColor || '#0ea5e9' 
+            } as React.CSSProperties}
+        >
             <div className="w-full max-w-md bg-white dark:bg-slate-900 min-h-screen md:min-h-0 md:rounded-[2.5rem] md:shadow-2xl md:border md:border-slate-200 dark:border-slate-800 relative overflow-hidden flex flex-col">
                 <PublicNavbar sysSettings={settings} />
-                <BookingFlow courts={courts} sysSettings={settings} session={session} />
+                {appLayout === 'chat' ? (
+                  <BookingFlowChat courts={courts} sysSettings={settings} session={session} />
+                ) : (
+                  <BookingFlow courts={courts} sysSettings={settings} session={session} />
+                )}
                 
                 {/* BURBUJA DE TORNEO ACTIVO */}
                 {settings?.tournamentsEnabled && activeTournament && (

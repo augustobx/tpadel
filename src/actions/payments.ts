@@ -44,7 +44,7 @@ export async function createPaymentPreference(bookingId: string) {
           }
         ],
         payer: {
-          email: booking.user?.email || 'cliente@psp.local',
+          email: booking.user?.email || 'cliente@tpadel.local',
           name: booking.user?.name || 'Cliente',
         },
         // CORRECCIÓN: Evitamos el 404 redirigiendo a la raíz de la app con un parámetro de estado.
@@ -103,7 +103,7 @@ export async function createTournamentPaymentPreference(teamId: string) {
           }
         ],
         payer: {
-          email: team.player1?.email || 'cliente@psp.local',
+          email: team.player1?.email || 'cliente@tpadel.local',
           name: team.name || team.player1?.name || 'Jugador',
         },
         back_urls: {

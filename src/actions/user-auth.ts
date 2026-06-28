@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 
-const SESSION_COOKIE_NAME = "psp_user_session";
+const SESSION_COOKIE_NAME = "tpadel_user_session";
 
 export async function registerUser(formData: FormData) {
     const name = formData.get("name") as string;
@@ -115,7 +115,7 @@ export async function logoutUser(formData?: FormData) {
 export async function skipRegistration() {
     const cookieStore = await cookies();
     // Cookie de sesión (sin maxAge) para que se borre al cerrar el navegador
-    cookieStore.set("psp_skip_registration", "true", {
+    cookieStore.set("tpadel_skip_registration", "true", {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         path: "/",

@@ -10,7 +10,7 @@ export default function Error({
   unstable_retry: () => void
 }) {
   useEffect(() => {
-    console.error('[PSP Error Boundary]', error)
+    console.error('[T-Padel Error Boundary]', error)
   }, [error])
 
   return (

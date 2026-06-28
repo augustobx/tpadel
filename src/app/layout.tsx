@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import '@/app/globals.css';
@@ -13,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sistema PSP - Reservas y Torneos",
+  title: "Sistema T-Padel - Reservas y Torneos",
   description: "Plataforma de gestión deportiva, reservas de canchas y organización de torneos.",
   manifest: "/manifest.json",
 };

@@ -19,7 +19,7 @@ export default async function AdminUsuariosPage() {
         <div className="max-w-6xl mx-auto p-6 space-y-6">
             <div>
                 <h1 className="text-3xl font-bold text-gray-900">Usuarios Registrados</h1>
-                <p className="text-gray-500">Gestión de jugadores de la comunidad PSP.</p>
+                <p className="text-gray-500">Gestión de jugadores de la comunidad T-Padel.</p>
             </div>
 
             <UsuariosClient initialUsers={users} />

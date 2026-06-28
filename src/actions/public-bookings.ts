@@ -175,14 +175,22 @@ export async function getBookingsByPhone(phone: string) {
     try {
         const normalizedPhone = normalizePhoneForWhatsApp(phone);
         
-        // Buscamos al usuario por su teléfono
-        const user = await prisma.user.findFirst({
-            where: { phone: normalizedPhone }
+        // Buscamos al usuario por su teléfono (normalizado o sin normalizar)
+        const users = await prisma.user.findMany({
+            where: { 
+                OR: [
+                    { phone: normalizedPhone },
+                    { phone: phone }
+                ]
+            },
+            select: { id: true }
         });
 
-        if (!user) {
+        if (users.length === 0) {
             return { success: true, data: [] }; // No se encontraron reservas
         }
+
+        const userIds = users.map(u => u.id);
 
         // Buscamos sus reservas, de los últimos 30 días y futuras
         const thirtyDaysAgo = new Date();
@@ -190,7 +198,7 @@ export async function getBookingsByPhone(phone: string) {
 
         const bookings = await prisma.booking.findMany({
             where: {
-                userId: user.id,
+                userId: { in: userIds },
                 startTime: { gte: thirtyDaysAgo }
             },
             include: {
@@ -217,5 +225,96 @@ export async function getBookingsByPhone(phone: string) {
     } catch (error) {
         console.error('Error fetching bookings by phone:', error);
         return { success: false, error: 'Error al buscar los turnos' };
+    }
+}
+
+export async function getAvailableSlotsByDate(dateStr: string) {
+    try {
+        const courtsRes = await getPublicCourts();
+        if (!courtsRes.success || !courtsRes.data) return { success: false, error: 'Error cargando canchas' };
+        
+        const courts = courtsRes.data;
+        const availableSlotsMap = new Map<string, any[]>();
+
+        // Obtenemos la disponibilidad de todas las canchas para este día
+        for (const court of courts) {
+            const slotsRes = await getAvailableSlots(court.id, dateStr);
+            if (slotsRes.success && slotsRes.data) {
+                const slotsData = slotsRes.data as { time: string, status: string }[];
+                for (const slot of slotsData) {
+                    if (slot.status === 'AVAILABLE') {
+                        if (!availableSlotsMap.has(slot.time)) {
+                            availableSlotsMap.set(slot.time, []);
+                        }
+                        availableSlotsMap.get(slot.time)?.push(court);
+                    }
+                }
+            }
+        }
+
+        // Convertimos el map a un array ordenado por hora
+        const aggregatedSlots = Array.from(availableSlotsMap.entries()).map(([time, availableCourts]) => ({
+            time,
+            courts: availableCourts
+        })).sort((a, b) => a.time.localeCompare(b.time));
+
+        return { success: true, data: aggregatedSlots };
+    } catch (error) {
+        console.error('Error in getAvailableSlotsByDate:', error);
+        return { success: false, error: 'Error general al buscar disponibilidad por día' };
+    }
+}
+
+// NUEVO: Cancelar reserva desde el chatbot por el cliente
+export async function cancelPublicBooking(bookingId: string, phone: string) {
+    try {
+        const booking = await prisma.booking.findUnique({
+            where: { id: bookingId }
+        });
+
+        if (!booking) {
+            return { success: false, error: 'Reserva no encontrada.' };
+        }
+
+        // Verificar que el teléfono coincida o que el usuario tenga ese teléfono (por seguridad)
+        let phoneMatches = false;
+        if (booking.userId) {
+            const user = await prisma.user.findUnique({ where: { id: booking.userId } });
+            if (user) {
+                const normUserPhone = normalizePhoneForWhatsApp(user.phone || '');
+                const normInputPhone = normalizePhoneForWhatsApp(phone);
+                if (normUserPhone === normInputPhone) {
+                    phoneMatches = true;
+                }
+            }
+        } else {
+            // Si no tiene user, no puede cancelarla tan fácil, pero asumiremos que el número 
+            // no coincide por seguridad
+            phoneMatches = false;
+        }
+
+        if (!phoneMatches) {
+            return { success: false, error: 'No tienes permisos para cancelar esta reserva.' };
+        }
+
+        if (booking.status === 'CANCELLED') {
+            return { success: false, error: 'La reserva ya estaba cancelada.' };
+        }
+
+        // Opcional: Validar que falten X horas. Por ahora, si es en el futuro, se puede cancelar.
+        const now = new Date();
+        if (booking.startTime < now) {
+            return { success: false, error: 'No puedes cancelar una reserva que ya comenzó o pasó.' };
+        }
+
+        await prisma.booking.update({
+            where: { id: bookingId },
+            data: { status: 'CANCELLED' }
+        });
+
+        return { success: true };
+    } catch (error) {
+        console.error("Error cancelling public booking:", error);
+        return { success: false, error: 'Error del servidor al intentar cancelar.' };
     }
 }

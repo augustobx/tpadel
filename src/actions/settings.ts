@@ -25,6 +25,7 @@ export async function updateSystemSettings(formData: FormData) {
         const tournamentsEnabled = formData.get("tournamentsEnabled") === "on";
         const usersModuleEnabled = formData.get("usersModuleEnabled") === "on";
         const requireDepositForRegistered = formData.get("requireDepositForRegistered") === "on";
+        const clientCancellations = formData.get("clientCancellations") === "on";
 
         const clubName = (formData.get("clubName") as string) || "";
         const topbarName = (formData.get("topbarName") as string) || "";
@@ -35,6 +36,10 @@ export async function updateSystemSettings(formData: FormData) {
         const reservationFee = Number(formData.get("reservationFee")) || 0;
         const sportEmoji = (formData.get("sportEmoji") as string) || "🎾";
         const theme = (formData.get("theme") as string) || "light";
+        const appLayout = (formData.get("appLayout") as string) || "classic";
+        const heroImage = (formData.get("heroImage") as string) || "";
+        const primaryColor = (formData.get("primaryColor") as string) || "#10b981";
+        const secondaryColor = (formData.get("secondaryColor") as string) || "#0ea5e9";
 
         const adminUser = (formData.get("adminUser") as string) || "admin";
         const adminPass = (formData.get("adminPass") as string) || "admin123";
@@ -49,12 +54,13 @@ export async function updateSystemSettings(formData: FormData) {
         await prisma.systemSetting.update({
             where: { id: 1 },
             data: {
-                clubName, topbarName, contactPhone, courtPhone, apiPhone, mpAccessToken, reservationFee, sportEmoji, theme,
+                clubName, topbarName, contactPhone, courtPhone, apiPhone, mpAccessToken, reservationFee, sportEmoji, theme, appLayout, heroImage,
                 reservationsEnabled, whatsappReservations, pwaEnabled, autoWhatsapp, requireDeposit, notifyAdmin, tournamentsEnabled,
-                usersModuleEnabled, requireDepositForRegistered,
+                usersModuleEnabled, requireDepositForRegistered, clientCancellations,
                 adminUser, adminPass,
                 splashLogo, splashName, splashDuration,
-                bubbleActive, bubbleText, bubbleColor, bubbleDuration
+                bubbleActive, bubbleText, bubbleColor, bubbleDuration,
+                primaryColor, secondaryColor
             },
         });
 

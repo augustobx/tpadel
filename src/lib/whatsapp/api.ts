@@ -123,7 +123,7 @@ export async function sendInteractiveList(
             type: 'list',
             header: { type: 'text', text: headerText },
             body: { text: bodyText },
-            footer: { text: 'PSP Padel Club 🎾' },
+            footer: { text: 'T-Padel 🎾' },
             action: {
                 button: buttonTitle,
                 sections: [

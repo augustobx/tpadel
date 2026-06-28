@@ -103,7 +103,7 @@ export async function sendBookingConfirmation(bookingId: string): Promise<void> 
         // Intentar enviar plantilla aprobada de Meta
         const templateResult = await sendTemplateMessage(
             phone,
-            'confirmacion_turno_pwa_psp_spa',
+            'confirmacion_turno_pwa_tpadel_spa',
             [clientName, fecha, horaInicio, detalle],
             'es_AR'
         );

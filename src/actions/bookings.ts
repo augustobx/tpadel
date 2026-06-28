@@ -104,7 +104,7 @@ export async function createBooking(data: {
       if (!user) {
         user = await prisma.user.create({
           data: {
-            email: `${normalizedPhone}@cliente.psp`,
+            email: `${normalizedPhone}@cliente.tpadel`,
             name: data.name,
             phone: normalizedPhone,
             role: 'PLAYER',
@@ -115,6 +115,20 @@ export async function createBooking(data: {
           where: { id: user.id },
           data: { name: data.name, phone: normalizedPhone }
         });
+      }
+    } else {
+      // If user is found via session, ensure their phone is normalized in DB
+      if (user.phone !== normalizedPhone) {
+        // check if someone else is already using this normalized phone
+        const exists = await prisma.user.findFirst({
+          where: { phone: normalizedPhone, id: { not: user.id } }
+        });
+        if (!exists) {
+          user = await prisma.user.update({
+            where: { id: user.id },
+            data: { phone: normalizedPhone }
+          });
+        }
       }
     }
 

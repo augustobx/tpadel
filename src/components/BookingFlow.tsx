@@ -18,7 +18,7 @@ export default function BookingFlow({ courts, sysSettings, session }: { courts: 
   const splashDuration = sysSettings?.splashDuration || 1500;
   const bubbleDuration = sysSettings?.bubbleDuration || 3000;
   const splashLogo = sysSettings?.splashLogo || "";
-  const splashName = sysSettings?.splashName || "Sistema PSP";
+  const splashName = sysSettings?.splashName || "Sistema T-Padel";
   const clubName = sysSettings?.clubName || "Padel Club";
   const sportEmoji = sysSettings?.sportEmoji || "🎾";
 
@@ -149,7 +149,7 @@ export default function BookingFlow({ courts, sysSettings, session }: { courts: 
           {splashLogo ? (
             <img src={splashLogo} alt={splashName} className="w-32 h-32 object-contain mb-6 rounded-2xl shadow-[0_0_40px_rgba(16,185,129,0.3)]" />
           ) : (
-            <div className="w-24 h-24 bg-emerald-500 rounded-full flex items-center justify-center font-black text-slate-900 text-5xl mb-6 shadow-[0_0_40px_rgba(16,185,129,0.3)]">
+            <div className="w-24 h-24 bg-[var(--color-primary)] rounded-full flex items-center justify-center font-black text-slate-900 text-5xl mb-6 shadow-[0_0_40px_rgba(16,185,129,0.3)]">
               {sportEmoji}
             </div>
           )}
@@ -157,7 +157,7 @@ export default function BookingFlow({ courts, sysSettings, session }: { courts: 
         <h1 className="text-3xl font-black tracking-tight text-white mb-1">
           {splashName}
         </h1>
-        <p className="text-emerald-400 font-bold tracking-widest text-sm uppercase">{clubName}</p>
+        <p className="text-[var(--color-primary)] font-bold tracking-widest text-sm uppercase">{clubName}</p>
       </div>
     );
   }
@@ -185,7 +185,7 @@ export default function BookingFlow({ courts, sysSettings, session }: { courts: 
             {/* Fechas */}
             <div className="space-y-3">
               <label className="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center">
-                <CalendarIcon className="w-4 h-4 mr-2 text-emerald-500" /> ¿Qué día jugás?
+                <CalendarIcon className="w-4 h-4 mr-2 text-[var(--color-primary)]" /> ¿Qué día jugás?
               </label>
               <div className="flex space-x-3 overflow-x-auto pb-2 snap-x hide-scrollbar">
                 {upcomingDays.map((date, i) => {
@@ -195,7 +195,7 @@ export default function BookingFlow({ courts, sysSettings, session }: { courts: 
                       key={i}
                       onClick={() => setSelectedDate(date)}
                       className={`flex-shrink-0 w-16 p-3 rounded-2xl flex flex-col items-center justify-center transition-all snap-start shadow-sm border ${isSelected
-                        ? 'bg-emerald-500 text-white border-emerald-500 ring-4 ring-emerald-500/20'
+                        ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)] ring-4 ring-[var(--color-primary)]/20'
                         : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50'
                         }`}
                     >
@@ -214,7 +214,7 @@ export default function BookingFlow({ courts, sysSettings, session }: { courts: 
             {/* Canchas */}
             <div className="space-y-3">
               <label className="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center">
-                <MapPin className="w-4 h-4 mr-2 text-emerald-500" /> Elegí tu cancha
+                <MapPin className="w-4 h-4 mr-2 text-[var(--color-primary)]" /> Elegí tu cancha
               </label>
               <div className="grid grid-cols-2 gap-3">
                 {courts.map(court => (
@@ -222,8 +222,8 @@ export default function BookingFlow({ courts, sysSettings, session }: { courts: 
                     key={court.id}
                     onClick={() => setSelectedCourt(court.id)}
                     className={`p-4 rounded-2xl text-left transition-all border shadow-sm flex flex-col active:scale-[0.98] ${selectedCourt === court.id
-                      ? 'bg-emerald-50 border-emerald-500 ring-2 ring-emerald-500 text-emerald-900 dark:bg-emerald-900/30 dark:text-emerald-100 transform scale-[1.02]'
-                      : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-emerald-300'
+                      ? 'bg-[var(--color-primary)] border-[var(--color-primary)] ring-2 ring-[var(--color-primary)] text-[var(--color-primary)] dark:bg-[var(--color-primary)]/30 dark:text-[var(--color-primary)] transform scale-[1.02]'
+                      : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-[var(--color-primary)]'
                       }`}
                   >
                     <span className="font-bold text-base">{court.name}</span>
@@ -237,15 +237,15 @@ export default function BookingFlow({ courts, sysSettings, session }: { courts: 
             {selectedCourt && (
               <div className="space-y-3 animate-in fade-in slide-in-from-bottom-4 duration-500" ref={slotsRef}>
                 <label className="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center justify-between">
-                  <div className="flex items-center"><Clock className="w-4 h-4 mr-2 text-emerald-500" /> Horarios</div>
+                  <div className="flex items-center"><Clock className="w-4 h-4 mr-2 text-[var(--color-primary)]" /> Horarios</div>
                   <div className="flex items-center space-x-2 text-[10px] font-bold text-slate-400 uppercase">
-                    <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-emerald-500 mr-1"></span>Libre</span>
+                    <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-[var(--color-primary)] mr-1"></span>Libre</span>
                     <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-slate-300 mr-1"></span>Ocupado</span>
                   </div>
                 </label>
 
                 {loading ? (
-                  <div className="flex justify-center p-8"><div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div></div>
+                  <div className="flex justify-center p-8"><div className="w-8 h-8 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>
                 ) : slots.length > 0 ? (
                   <div className="grid grid-cols-2 gap-3">
                     {slots.map((slot, idx) => {
@@ -261,7 +261,7 @@ export default function BookingFlow({ courts, sysSettings, session }: { courts: 
                             ${isAvailable
                               ? isSelected
                                 ? 'bg-slate-900 text-white border-slate-900 ring-4 ring-slate-900/20 shadow-md transform scale-[1.02]'
-                                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 shadow-sm hover:border-emerald-500 hover:text-emerald-600'
+                                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 shadow-sm hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]'
                               : 'bg-slate-50 dark:bg-slate-800/40 text-slate-400 border-slate-100 dark:border-slate-800 cursor-not-allowed'
                             }
                           `}
@@ -294,7 +294,7 @@ export default function BookingFlow({ courts, sysSettings, session }: { courts: 
           <form onSubmit={handleFinalSubmit} className="space-y-6 animate-in slide-in-from-right-8 duration-500 pt-4">
             <div className="bg-slate-900 text-white p-4 rounded-2xl shadow-lg flex justify-between items-center mb-6">
               <div>
-                <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider mb-1">Resumen de Reserva</p>
+                <p className="text-[10px] font-bold text-[var(--color-primary)] uppercase tracking-wider mb-1">Resumen de Reserva</p>
                 <p className="text-sm font-bold">
                   {selectedDate.toLocaleDateString('es-AR', { day: '2-digit', month: 'short' }).replace(/^\w/, c => c.toUpperCase())} • {selectedSlot} hs
                 </p>
@@ -311,11 +311,11 @@ export default function BookingFlow({ courts, sysSettings, session }: { courts: 
             <div className="space-y-4">
               <div className="space-y-1.5">
                 <label className="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center"><User className="w-4 h-4 mr-2 text-slate-400" /> Nombre y Apellido</label>
-                <input required type="text" placeholder="Ej: Augusto Basquez" className="w-full p-4 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 dark:text-white rounded-2xl font-medium focus:ring-2 focus:ring-emerald-500 outline-none transition-all shadow-sm" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
+                <input required type="text" placeholder="Ej: Augusto Basquez" className="w-full p-4 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 dark:text-white rounded-2xl font-medium focus:ring-2 focus:ring-[var(--color-primary)] outline-none transition-all shadow-sm" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
               </div>
               <div className="space-y-1.5">
                 <label className="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center"><Phone className="w-4 h-4 mr-2 text-slate-400" /> WhatsApp</label>
-                <input required type="tel" placeholder="Ej: 3329 123456" className="w-full p-4 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 dark:text-white rounded-2xl font-medium focus:ring-2 focus:ring-emerald-500 outline-none transition-all shadow-sm" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} />
+                <input required type="tel" placeholder="Ej: 3329 123456" className="w-full p-4 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 dark:text-white rounded-2xl font-medium focus:ring-2 focus:ring-[var(--color-primary)] outline-none transition-all shadow-sm" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} />
               </div>
             </div>
 
@@ -331,9 +331,9 @@ export default function BookingFlow({ courts, sysSettings, session }: { courts: 
         {/* --- PASO 3: ESPERANDO PAGO / ÉXITO --- */}
         {step === 3 && (
           <div className="flex flex-col items-center justify-center text-center py-12 animate-in zoom-in-95 duration-500">
-            <div className="w-24 h-24 bg-emerald-100 rounded-full flex items-center justify-center mb-6 shadow-inner relative">
-              <CheckCircle2 className="w-12 h-12 text-emerald-500 absolute" />
-              <div className="w-24 h-24 border-4 border-emerald-500 rounded-full animate-ping opacity-20"></div>
+            <div className="w-24 h-24 bg-[var(--color-primary)] rounded-full flex items-center justify-center mb-6 shadow-inner relative">
+              <CheckCircle2 className="w-12 h-12 text-[var(--color-primary)] absolute" />
+              <div className="w-24 h-24 border-4 border-[var(--color-primary)] rounded-full animate-ping opacity-20"></div>
             </div>
             <h3 className="text-3xl font-black text-slate-800 dark:text-slate-100 mb-3">¡Reserva {clientRequireDeposit ? 'registrada' : 'confirmada'}!</h3>
             <p className="text-slate-500 font-medium px-4 leading-relaxed mb-6">
@@ -347,15 +347,15 @@ export default function BookingFlow({ courts, sysSettings, session }: { courts: 
             <div className="w-full max-w-sm bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 text-left space-y-4 mb-8">
               <p className="text-xs uppercase tracking-wider font-bold text-slate-400 mb-1">Detalles de tu turno</p>
               <div className="flex items-center text-slate-700 dark:text-slate-200">
-                <MapPin className="w-5 h-5 mr-3 text-emerald-500" />
+                <MapPin className="w-5 h-5 mr-3 text-[var(--color-primary)]" />
                 <span className="font-bold text-lg">{courts.find(c => c.id === selectedCourt)?.name || 'Cancha'}</span>
               </div>
               <div className="flex items-center text-slate-700 dark:text-slate-200">
-                <CalendarIcon className="w-5 h-5 mr-3 text-emerald-500" />
+                <CalendarIcon className="w-5 h-5 mr-3 text-[var(--color-primary)]" />
                 <span className="font-bold text-lg capitalize">{selectedDate.toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' })}</span>
               </div>
               <div className="flex items-center text-slate-700 dark:text-slate-200">
-                <Clock className="w-5 h-5 mr-3 text-emerald-500" />
+                <Clock className="w-5 h-5 mr-3 text-[var(--color-primary)]" />
                 <span className="font-bold text-lg">{selectedSlot} hs</span>
               </div>
             </div>
@@ -374,7 +374,7 @@ export default function BookingFlow({ courts, sysSettings, session }: { courts: 
             <button
               onClick={handleNextStep}
               disabled={!selectedCourt || !selectedSlot}
-              className="w-full flex items-center justify-center bg-emerald-500 text-white font-bold text-lg py-4 rounded-2xl shadow-lg shadow-emerald-500/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:bg-emerald-600 active:scale-[0.98]"
+              className="w-full flex items-center justify-center bg-[var(--color-primary)] text-white font-bold text-lg py-4 rounded-2xl shadow-lg shadow-[var(--color-primary)]/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:bg-[var(--color-primary)] active:scale-[0.98]"
             >
               Continuar <ArrowRight className="w-5 h-5 ml-2" />
             </button>
@@ -382,7 +382,7 @@ export default function BookingFlow({ courts, sysSettings, session }: { courts: 
             <button
               onClick={handleFinalSubmit}
               disabled={loading || !formData.name || !formData.phone}
-              className="w-full flex items-center justify-center bg-slate-900 dark:bg-emerald-500 text-white font-bold text-lg py-4 rounded-2xl shadow-xl transition-all hover:bg-black dark:hover:bg-emerald-600 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center bg-slate-900 dark:bg-[var(--color-primary)] text-white font-bold text-lg py-4 rounded-2xl shadow-xl transition-all hover:bg-black dark:hover:bg-[var(--color-primary)] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <>

@@ -35,7 +35,7 @@ export default function AdminSidebar() {
       {/* NAVBAR MOBILE (Solo visible en celulares) */}
       <div className="md:hidden flex items-center justify-between bg-slate-900 text-white p-4 sticky top-0 z-40 shadow-md">
         <div className="flex items-center gap-2 font-black text-xl tracking-tight">
-          <span className="text-emerald-500">PSP</span> Admin
+          <span className="text-emerald-500">T-Padel</span> Admin
         </div>
         <button onClick={() => setIsOpen(!isOpen)} className="p-2 bg-slate-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
           {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -58,7 +58,7 @@ export default function AdminSidebar() {
         {/* Logo PC */}
         <div className="hidden md:flex items-center justify-center h-20 border-b border-slate-800">
           <h1 className="text-2xl font-black text-white tracking-tight">
-            <span className="text-emerald-500">PSP</span> Admin
+            <span className="text-emerald-500">T-Padel</span> Admin
           </h1>
         </div>
 

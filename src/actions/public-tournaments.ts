@@ -54,12 +54,12 @@ export async function registerTeam(tournamentId: string, categoryId: string, dat
     const phone2 = data.player2Phone ? normalizePhoneForWhatsApp(data.player2Phone) : null;
 
     let p1 = await prisma.user.findFirst({ where: { phone: phone1 } });
-    if (!p1) p1 = await prisma.user.create({ data: { phone: phone1, name: data.player1Name, role: 'PLAYER', email: `${phone1}@psp.com` } });
+    if (!p1) p1 = await prisma.user.create({ data: { phone: phone1, name: data.player1Name, role: 'PLAYER', email: `${phone1}@tpadel.com` } });
 
     let p2Id = null;
     if (phone2) {
       let p2 = await prisma.user.findFirst({ where: { phone: phone2 } });
-      if (!p2) p2 = await prisma.user.create({ data: { phone: phone2, name: data.player2Name, role: 'PLAYER', email: `${phone2}@psp.com` } });
+      if (!p2) p2 = await prisma.user.create({ data: { phone: phone2, name: data.player2Name, role: 'PLAYER', email: `${phone2}@tpadel.com` } });
       p2Id = p2.id;
     }
 

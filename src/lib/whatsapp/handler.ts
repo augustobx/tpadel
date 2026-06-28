@@ -1,5 +1,5 @@
 // src/lib/whatsapp/handler.ts
-// Handler principal del bot de WhatsApp para PSP Padel Club.
+// Handler principal del bot de WhatsApp para T-Padel.
 // Flujo completo: Saludo → Fecha → Cancha → Horario → Nombre → Pago MP → Confirmación automática.
 
 import { prisma } from '@/lib/prisma';
@@ -106,7 +106,7 @@ async function generatePaymentLink(bookingId: string): Promise<string | null> {
                     },
                 ],
                 payer: {
-                    email: booking.user?.email || 'cliente@psp.local',
+                    email: booking.user?.email || 'cliente@tpadel.local',
                     name: booking.user?.name || 'Cliente',
                 },
                 back_urls: {
@@ -634,7 +634,7 @@ async function createBookingAndSendPaymentLink(phone: string) {
                 `🕐 *Horario:* ${session.slotTime} - ${session.slotEnd}\n` +
                 `👤 *A nombre de:* ${clientLabel}\n` +
                 `📌 *Estado:* ✅ Confirmado\n\n` +
-                `¡Te esperamos en PSP Padel Club! 🎾💪`
+                `¡Te esperamos en T-Padel! 🎾💪`
             );
 
             // ---> NUEVO: Avisar al admin que entró una reserva confirmada por WhatsApp <---

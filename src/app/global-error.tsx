@@ -10,7 +10,7 @@ export default function GlobalError({
   unstable_retry: () => void
 }) {
   useEffect(() => {
-    console.error('[PSP Global Error]', error)
+    console.error('[T-Padel Global Error]', error)
   }, [error])
 
   return (

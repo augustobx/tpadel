@@ -311,7 +311,7 @@ model SystemSetting {
   mpAccessToken    String   @default("")
   reservationFee   Float    @default(0)
   sportEmoji       String   @default("🎾")
-  topbarName       String   @default("PSP Padel")
+  topbarName       String   @default("T-Padel")
   
   // --- FEATURE TOGGLES ---
   pwaEnabled       Boolean  @default(true)
@@ -325,14 +325,15 @@ model SystemSetting {
   // --- USERS MODULE ---
   usersModuleEnabled Boolean @default(false)
   requireDepositForRegistered Boolean @default(false)
+  clientCancellations Boolean @default(true)
 
   // --- SEGURIDAD ADMIN ---
   adminUser        String   @default("admin")
   adminPass        String   @default("admin123")
   
   // --- CONFIGURACIÓN DE LA APP / PWA ---
-  splashLogo       String   @default("PSP")
-  splashName       String   @default("PSP Padel")
+  splashLogo       String   @default("T-Padel")
+  splashName       String   @default("T-Padel")
   splashDuration   Int      @default(1500)
   
   bubbleActive     Boolean  @default(false)
@@ -341,6 +342,10 @@ model SystemSetting {
   bubbleColor      String   @default("#10b981")
   
   theme            String   @default("light")
+  appLayout        String   @default("classic")
+  heroImage        String?
+  primaryColor     String   @default("#10b981")
+  secondaryColor   String   @default("#0ea5e9")
   
   // --- MENSAJES DE WHATSAPP (Personalizables) ---
   wspWelcome       String?  @db.Text
